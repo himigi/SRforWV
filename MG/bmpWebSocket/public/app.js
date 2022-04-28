@@ -1,7 +1,11 @@
 const webSocket = new WebSocket("ws://localhost:3000"); // Connecting Server
 
 const btn = document.querySelector("form input"); // Declaring
-var img = document.createElement("img");
+const canvas = document.querySelector("canvas");
+canvas.width = 1500;
+canvas.height = 1000;
+
+const img = new Image();
 
 // Noticing when connection open
 webSocket.onopen = () => {
@@ -37,7 +41,9 @@ webSocket.onmessage = (e) => {
   var uri = createObjectURL(blob);
   console.log(uri);
   img.src = uri;
-  document.body.appendChild(img);
+  img.onload = () => {
+    canvas.getContext("2d").drawImage(img, 0, 0);
+  };
 };
 
 function createObjectURL(blob) {
