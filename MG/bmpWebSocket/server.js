@@ -31,7 +31,7 @@ wss.on("connection", (ws, request) => {
   // 웹소켓서버에서 현재 발생된 소켓에 대한 에러와 close 메세지 미리 적어둠.
   ws.on("error", (err) => console.log(err));
   ws.on("close", () => console.log("WSS Disconnected"));
-
+  /*
   // 소켓에서 이벤트 발생시 프로세스
   ws.on("message", (msg) => {
     if (msg.toString() === "Send me BMP!") {
@@ -52,16 +52,18 @@ wss.on("connection", (ws, request) => {
     }
   });
 });
-
-//   ws.on("message", (msg) => {
-//     for (i = 1; i < 24; i++) {
-//       setTimeout(() => {
-//         console.log(i);
-//         fs.readFile(path.join(__dirname, `/public/${i}.png`), (err, data) => {
-//           if (err) throw err;
-//           ws.send(data);
-//         });
-//       }, 1000);
-//     }
-//   });
-// });
+*/
+  ws.on("message", (msg) => {
+    for (i = 1; i < 25; i++) {
+      (function (x) {
+        setTimeout(() => {
+          console.log(x);
+          fs.readFile(path.join(__dirname, `/public/${x}.png`), (err, data) => {
+            if (err) throw err;
+            ws.send(data);
+          });
+        }, 200 * x);
+      })(i);
+    }
+  });
+});

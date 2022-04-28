@@ -1,6 +1,7 @@
 const webSocket = new WebSocket("ws://localhost:3000"); // Connecting Server
 
 const btn = document.querySelector("form input"); // Declaring
+var img = document.createElement("img");
 
 // Noticing when connection open
 webSocket.onopen = () => {
@@ -26,6 +27,7 @@ btn.addEventListener("click", (event) => {
 
 // Logging when anything received
 webSocket.onmessage = (e) => {
+  e.preventDefault();
   console.log("received data is... : ", e);
   console.log("BMP received!");
 
@@ -34,7 +36,6 @@ webSocket.onmessage = (e) => {
 
   var uri = createObjectURL(blob);
   console.log(uri);
-  var img = document.createElement("img");
   img.src = uri;
   document.body.appendChild(img);
 };

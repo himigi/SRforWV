@@ -1,7 +1,7 @@
 # READ ME
 
-## commit : save in my local
+### commit : save in my local
 
-## push : save online
+### push : save online
 
-## pull : download from online
+### pull : download from online
