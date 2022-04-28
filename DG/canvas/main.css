@@ -1,0 +1,19 @@
+body {
+    font :14px  arial;
+    text-align : center;
+    background : #36A;
+}
+h2 {
+    color : white;
+}
+canvas {
+    border : 10px white solid;
+    cursor : pointer;
+}
+a {
+  color : #F93;
+}
+.mute {
+    cursor : pointer;
+    display: initial;   
+}
