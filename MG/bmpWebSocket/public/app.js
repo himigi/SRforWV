@@ -29,43 +29,42 @@ btn.addEventListener("click", (event) => {
   webSocket.send("Still connected(from browser)");
 });
 
-// Logging when anything received(URL version test)
-webSocket.onmessage = (e) => {
-  e.preventDefault();
-  console.log("received data is... : ", e);
-  console.log("Data received!");
-
-  var imgURL = e.data;
-  console.log(imgURL);
-  img.src = imgURL;
-  img.onload = () => {
-    canvas.getContext("2d").drawImage(img, 0, 0);
-  };
-};
-
-// // Logging when anything received(Mp4 version)
+// // Logging when anything received(URL version test)
 // webSocket.onmessage = (e) => {
 //   e.preventDefault();
 //   console.log("received data is... : ", e);
-//   console.log("BMP received!");
+//   console.log("Data received!");
 
-//   var blob = e.data;
-//   console.log("blob size is ... : " + blob.size + " byte.");
-
-//   var uri = createObjectURL(blob);
-//   console.log(uri);
-//   img.src = uri;
+//   var imgURL = e.data;
+//   console.log(imgURL);
+//   img.src = imgURL;
 //   img.onload = () => {
 //     canvas.getContext("2d").drawImage(img, 0, 0);
 //   };
 // };
 
-// function createObjectURL(blob) {
-//   if (window.webkitURL) {
-//     return window.webkitURL.createObjectURL(blob);
-//   } else if (window.URL && window.URL.createObjectURL) {
-//     return window.URL.createObjectURL(blob);
-//   } else {
-//     return null;
-//   }
-// }
+// Logging when anything received(Mp4 version)
+webSocket.onmessage = (e) => {
+  e.preventDefault();
+  console.log("BMP received!");
+  console.log("received data is... : ", e);
+
+  var blob = e.data;
+
+  var uri = createObjectURL(blob);
+  console.log("uri is ...: ", uri);
+  img.src = uri;
+  img.onload = () => {
+    canvas.getContext("2d").drawImage(img, 0, 0);
+  };
+};
+
+function createObjectURL(blob) {
+  if (window.webkitURL) {
+    return window.webkitURL.createObjectURL(blob);
+  } else if (window.URL && window.URL.createObjectURL) {
+    return window.URL.createObjectURL(blob);
+  } else {
+    return null;
+  }
+}
