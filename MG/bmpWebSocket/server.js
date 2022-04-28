@@ -32,51 +32,63 @@ wss.on("connection", (ws, request) => {
   ws.on("error", (err) => console.log(err));
   ws.on("close", () => console.log("WSS Disconnected"));
 
-  // 소켓에서 이벤트 발생시 (고양이 mp4 약 24초길이 총 120장짜리 )
+  //   // 소켓에서 이벤트 발생시 (고양이 mp4 약 10초길이 총 120장짜리 )
+  //   ws.on("message", (msg) => {
+  //     if (msg.toString() === "Send me!") {
+  //       for (i = 1; i <= 120; i++) {
+  //         (function (x) {
+  //           setTimeout(() => {
+  //             console.log(x);
+  //             fs.readFile(
+  //               path.join(
+  //                 __dirname,
+  //                 `/public/mp4/pexels-anete-lusina-5248199_out (${x}).bmp`
+  //               ),
+  //               (err, data) => {
+  //                 if (err) throw err;
+  //                 console.log(data); // 서버 콘솔에서 현재 읽어들인 data 통째로 로그 찍어봄
+  //                 console.log(data.toJSON()); // 서버 콘솔에서 data의 JSON형태는 어떨지 로그 찍어봄
+  //                 ws.send(data); // 소켓으로 클라이언트에 send
+  //               }
+  //             );
+  //           }, 100 * x);
+  //         })(i);
+  //       }
+  //     }
+  //   });
+  // });
+
+  //   // 소켓에서 이벤트 발생시 프로세스 (사진 1장)
+  //   ws.on("message", (msg) => {
+  //     if (msg.toString() === "Send me!") {
+  //       fs.readFile(
+  //         // path.join(__dirname, "/public/spotcatJPG.jpg"),
+  //         // path.join(__dirname, "/public/snowleopardPNG.png"),
+  //         path.join(__dirname, "/public/images/greenBMP.bmp"),
+  //         (err, data) => {
+  //           if (err) throw err;
+  //           console.log(data); // 서버 콘솔에서 현재 읽어들인 data 통째로 로그 찍어봄
+  //           console.log(data.toJSON()); // 서버 콘솔에서 data의 JSON형태는 어떨지 로그 찍어봄
+  //           ws.send(data); // 소켓으로 클라이언트에 send
+  //         }
+  //       );
+  //       console.log("Okay, BMP on way");
+  //     }
+  //   });
+  // });
+
+  // 근데 이게 그냥 http 통신이랑 뭐가 다를까..? 속도에서 차이가 많이 날까?
+  // 한번 테스트해볼까...
+
+  // https://cdn.pixabay.com/photo/2018/04/26/16/31/marine-3352341_960_720.jpg
+
+  // 소켓에서 이벤트 발생시 프로세스 (URL)
   ws.on("message", (msg) => {
     if (msg.toString() === "Send me!") {
-      for (i = 1; i < 120; i++) {
-        (function (x) {
-          setTimeout(() => {
-            console.log(x);
-            fs.readFile(
-              path.join(
-                __dirname,
-                `/public/mp4/pexels-anete-lusina-5248199_out (${x}).bmp`
-              ),
-              (err, data) => {
-                if (err) throw err;
-                console.log(data); // 서버 콘솔에서 현재 읽어들인 data 통째로 로그 찍어봄
-                console.log(data.toJSON()); // 서버 콘솔에서 data의 JSON형태는 어떨지 로그 찍어봄
-                ws.send(data); // 소켓으로 클라이언트에 send
-              }
-            );
-          }, 200 * x);
-        })(i);
-      }
+      const imgURL =
+        "https://cdn.pixabay.com/photo/2018/04/26/16/31/marine-3352341_960_720.jpg";
+      ws.send(imgURL);
+      console.log("Okay, data on way");
     }
   });
 });
-
-/*
-  // 소켓에서 이벤트 발생시 프로세스 (사진 1장)
-  ws.on("message", (msg) => {
-    if (msg.toString() === "Send me BMP!") {
-      // 여기서는 클라이언트에서 요청 이벤트 발생 시 파일을 읽고 있지만, 원래는 읽은 상태에서 서버가 대기하는게 더 좋을듯
-      fs.readFile(
-        // path.join(__dirname, "/public/spotcatJPG.jpg"),
-        // path.join(__dirname, "/public/snowleopardPNG.png"),
-        path.join(__dirname, "/public/greenBMP.bmp"),
-        (err, data) => {
-          if (err) throw err;
-          
-          console.log(data); // 서버 콘솔에서 현재 읽어들인 data 통째로 로그 찍어봄
-          console.log(data.toJSON()); // 서버 콘솔에서 data의 JSON형태는 어떨지 로그 찍어봄
-          ws.send(data); // 소켓으로 클라이언트에 send
-        }
-      );
-      console.log("Okay, BMP on way");
-    }
-  });
-});
-*/
