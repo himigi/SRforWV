@@ -4,6 +4,11 @@
 </head>
 <body>
     <video autoplay></video>
+
+
+
+
+
     <script>
         // get video dom element
         const video = document.querySelector('video');
@@ -21,13 +26,14 @@
             return data;
         }
         const WS_URL = location.origin.replace(/^http/, 'ws');
-        const FPS = 5;
+        const FPS = 0;
         const ws = new WebSocket(WS_URL);
-        ws.onopen = () => {
+        ws.onopen =  () => {
             console.log(`Connected to ${WS_URL}`);
             setInterval(() => {
                 ws.send(getFrame());
             }, 1000 / FPS);
+ 
         }
     </script>
 </body>

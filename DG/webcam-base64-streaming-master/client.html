@@ -3,11 +3,17 @@
     <title>Client</title>
 </head>
 <body>
-    <img src="">
+    <canvas></canvas>
+
+
+
+
+
     <script>
+        // [ =================== 이미지 태그 생성후 이미지 받아오기 ===================]
         // get img dom element
-        const img = document.querySelector('img');
-        
+        var img = new Image()
+
         const WS_URL = location.origin.replace(/^http/, 'ws');
         const ws = new WebSocket(WS_URL);
         ws.onopen = () => console.log(`Connected to ${WS_URL}`);
@@ -15,6 +21,20 @@
             // set the base64 string to the src tag of the image
             img.src = message.data;
         }
+        
+        document.body.appendChild(img)
+
+        // [ =================== 캔버스에 이미지 태그 그리기 ===================]
+        const canvas = document.querySelector('canvas')
+
+        canvas.width = 400;
+        canvas.height = 400;
+
+        img.onload = () => {
+            canvas.getContext('2d').drawImage(img, 0, 0);
+        }
+
+        
     </script>
 </body>
 </html>
