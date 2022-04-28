@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Canvas Test</title>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+  </body>
+  <script>
+    var canvas = document.createElement("canvas");
+    document.body.appendChild(canvas);
+
+    var height = 200;
+    var width = 200;
+
+    canvas.width = width;
+    canvas.height = height;
+
+    var ctx = canvas.getContext("2d");
+
+    ctx.strokeStyle = "#090";
+    ctx.beginPath();
+    ctx.arc(width / 2, height / 2, width / 2 - width / 10, 0, Math.PI * 2);
+    ctx.stroke();
+  </script>
+</html>
