@@ -1,7 +1,6 @@
 const fs = require("fs");
 const WebSocket = require("ws");
 const path = require("path");
-const child_process = require("child_process");
 
 module.exports = (server) => {
   const wss = new WebSocket.Server({ server });
