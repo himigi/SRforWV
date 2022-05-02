@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>익스프레스 서버</title>
+    <style>
+      video {
+        position: absolute;
+        width: 0;
+        height: 0;
+      }
+      canvas {
+        background: aquamarine;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>TEST</h1>
+    <form id="btn">
+      <input type="submit" name="bmpRequest" value="Send me BMP!" />
+    </form>
+    <video class="video" src="" autoplay muted loop></video>
+    <canvas class="canvas" width="1000" height="1000">
+      이 문장은 사용자의 웹 브라우저가 canvas 요소를 지원하지 않을 때
+      나타납니다!
+    </canvas>
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "name": "rtsp-server",
+  "version": "1.2.2",
+  "description": "Low level module for creating RTSP servers",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && tape test.js"
+  },
+  "author": "Thomas Watson Steen <w@tson.dk> (https://twitter.com/wa7son)",
+  "license": "MIT",
+  "keywords": [
+    "rtsp",
+    "server",
+    "rfc2326",
+    "2326",
+    "realtime",
+    "stream",
+    "streaming",
+    "protocol"
+  ],
+  "dependencies": {
+    "debug": "^2.2.0",
+    "rtsp-stream": "^1.0.0"
+  },
+  "devDependencies": {
+    "standard": "^5.1.1",
+    "tape": "^4.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/watson/rtsp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/watson/rtsp-server/issues"
+  },
+  "homepage": "https://github.com/watson/rtsp-server#readme",
+  "coordinates": [
+    55.68769,
+    12.595631
+  ]
+}
