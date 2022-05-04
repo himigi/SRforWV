@@ -8,8 +8,8 @@ const RtspServer = require("rtsp-streaming-server").default;
 const child_process = require("child_process");
 
 // [ ============================= http 서버 생성 ============================= ]
-app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname + "/index.html"));
+app.get("/1", function (req, res) {
+    res.sendFile(path.join(__dirname + "/index1.html"));
   }); 
 
 //static으로 정적 리소스 읽을 준비
@@ -22,9 +22,14 @@ server.listen(6148, ()=>{
 
 // [ ============================= rtsp서버 설정 & FFMPEG 으로 화면영상 인코딩후 보내기 ============================= ]
 // rtsp 서버
+
+let number
+
+let cp
+
 const rtspServer = new RtspServer({
   serverPort: 5554,//서버 포트
-  clientPort: 6554,// 클라이언트 포트
+  clientPort: cp,// 클라이언트 포트
   rtpPortStart: 10000,
   rtpPortCount: 10000,
 });
@@ -48,6 +53,15 @@ io.on("connection", (socket) => {
   socket.on('click',()=>{
     serverRun()
   })
+
+  socket.on('one', (link)=>{
+    if(link === "http://localhost:6148/1"){
+      number = 1
+      console.log('number done')
+      cp = 6550
+      console.log('cp done')
+    }
+  })
 })
 
 
@@ -55,7 +69,7 @@ io.on("connection", (socket) => {
 
 // [ =============================  FFMPEG 으로 인코딩된 화면 영상 받은후 client에 보내주기 ============================= ]
 // rtsp를 통한 ffmpeg 인코딩 데이터 받기
-var uri = "rtsp://127.0.0.1:6554/stream1",
+var uri = "rtsp://127.0.0.1:6550/stream1",
   stream = new rtsp.FFMpeg({ input: uri });
 
 io.on("connection", function (socket) {
