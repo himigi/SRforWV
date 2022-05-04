@@ -22,48 +22,43 @@ server.listen(6148, ()=>{
 
 // [ ============================= rtsp서버 설정 & FFMPEG 으로 화면영상 인코딩후 보내기 ============================= ]
 // rtsp 서버
-
-let number
-
-let cp
-
-const rtspServer = new RtspServer({
-  serverPort: 5554,//서버 포트
-  clientPort: cp,// 클라이언트 포트
-  rtpPortStart: 10000,
-  rtpPortCount: 10000,
-});
-
-
-// [ FFMPEG 함수 선언 : yuv420인코딩 후 데이터 송신 명령문 cmd에서 실행 ]
-async function serverRun() {
-  try {
-    await rtspServer.start();
-    console.log("✅ RTSP server open");
-    child_process.exec(
-      'ffmpeg -f gdigrab -framerate 360 -i title="업무망PC-100" -codec h264 -acodec aac -pix_fmt yuv420p -f mpegts -c:v libx264 -r 30 -preset ultrafast -tune zerolatency -crf 100 -pix_fmt yuv420p -f rtsp rtsp://127.0.0.1:5554/stream1'
-    );
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-// 버튼이벤트 값 수신후 serverRun() 함수 실행
 io.on("connection", (socket) => {
-  socket.on('click',()=>{
-    serverRun()
-  })
-
   socket.on('one', (link)=>{
     if(link === "http://localhost:6148/1"){
-      number = 1
-      console.log('number done')
-      cp = 6550
+      const cp = 6550
       console.log('cp done')
+
+      const rtspServer = new RtspServer({
+        serverPort: 5554,//서버 포트
+        clientPort: cp,// 클라이언트 포트
+        rtpPortStart: 10000,
+        rtpPortCount: 10000,
+      });
+
+      // [ FFMPEG 함수 선언 : yuv420인코딩 후 데이터 송신 명령문 cmd에서 실행 ]
+      async function serverRun() {
+        try {
+          await rtspServer.start();
+          console.log("✅ RTSP server open");
+          child_process.exec(
+            'ffmpeg -f gdigrab -framerate 360 -i title="업무망PC-100" -codec h264 -acodec aac -pix_fmt yuv420p -f mpegts -c:v libx264 -r 30 -preset ultrafast -tune zerolatency -crf 100 -pix_fmt yuv420p -f rtsp rtsp://127.0.0.1:5554/stream1'
+          );
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+
+      // 버튼이벤트 값 수신후 serverRun() 함수 실행
+      io.on("connection", (socket) => {
+        socket.on('click',()=>{
+          serverRun()
+        })
+      })
+
     }
   })
 })
-
 
 
 
