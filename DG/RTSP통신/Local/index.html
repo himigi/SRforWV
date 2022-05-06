@@ -1,0 +1,124 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RTSP play</title>
+
+    <link rel="stylesheet" type="text/css" href="./main.css">
+  </head>
+  <body>
+    <p>"I see you" Through </p>
+    <svg class="title" viewBox="0 0 600 60">
+      <text x="30%" y="50%" dy=".35em">
+          Zoom Face
+      </text>
+    </svg>
+
+    <form class="btn-group">
+      <input class="one" type="submit" name="1번 사용자" value="one" />
+      <input class="two" type="submit" name="2번 사용자" value="two" />
+      <input class="three" type="submit" name="3번 사용자" value="three" />
+      <input class="four" type="submit" name="4번 사용자" value="four" />
+    </form>
+
+    <button class="active">통신시작</button>
+    <div class="canvas-group">
+      <canvas class="canvas-one"></canvas>
+      <canvas class="canvas-two"></canvas>
+      <canvas class="canvas-three"></canvas>
+      <canvas class="canvas-four"></canvas>
+    </div>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+
+
+      //[ ==================== rtsp를 통한 영상 데이터 받아오기 ====================]
+      const imgOne = document.createElement("img")
+      const imgTwo = document.createElement("img")
+      const imgThree = document.createElement("img")
+      const imgFour = document.createElement("img")
+
+      const socket = io("");
+      socket.on("one", () => {
+        socket.on("data", function (data) {
+          imgOne.src = "data:image/Webp;base64," + data;
+        });
+      })
+
+      socket.on("two", () => {
+        socket.on("data", function (data) {
+          imgTwo.src = "data:image/Webp;base64," + data;
+        });
+      })
+
+      socket.on("three", () => {
+        socket.on("data", function (data) {
+          imgThree.src = "data:image/Webp;base64," + data;
+        });
+      })
+
+      socket.on("four", () => {
+        socket.on("data", function (data) {
+          imgFour.src = "data:image/Webp;base64," + data;
+        });
+      })
+
+
+      //[ ==================== canvas그리기 ====================]
+      const canvasOne = document.querySelector('.canvas-one')
+      const canvasTwo = document.querySelector('.canvas-two')
+      const canvasThree = document.querySelector('.canvas-three')
+      const canvasFour = document.querySelector('.canvas-four')
+
+      imgOne.onload = () => {
+          canvasOne.getContext('2d').drawImage(imgOne, 0, 0);
+      }
+      imgTwo.onload = () => {
+          canvasTwo.getContext('2d').drawImage(imgTwo, 0, 0);
+      }
+      imgThree.onload = () => {
+          canvasThree.getContext('2d').drawImage(imgThree, 0, 0);
+      }
+      imgFour.onload = () => {
+          canvasFour.getContext('2d').drawImage(imgFour, 0, 0);
+      }
+
+      //[ ==================== button ====================]
+      const button = document.querySelector('.active')
+      button.addEventListener('click', () => {
+        socket.emit('click')
+      })
+
+
+      //[ One ]
+      const one = document.querySelector('.one') 
+      one.addEventListener('click', () => {
+        socket.emit('one', one.value)
+      })
+       //[ two ]
+      const two = document.querySelector('.two') 
+      two.addEventListener('click', () => {
+        socket.emit('two', two.value)
+      })
+       //[ three ]
+      const three = document.querySelector('.three') 
+      three.addEventListener('click', () => {
+        socket.emit('three', three.value)
+      })
+       //[ four ]
+      const four = document.querySelector('.four') 
+      four.addEventListener('click', () => {
+        socket.emit('four', four.value)
+      })
+
+      
+
+
+
+    </script>
+  </body>
+</html>

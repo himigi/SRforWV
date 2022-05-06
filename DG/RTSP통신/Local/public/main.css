@@ -90,10 +90,15 @@ button:hover {
     cursor: grabbing;
   }
 }
-canvas {
+.canvas-group {
   background: #ff6854;
   opacity: 0.8;
   border-radius: 20px;
+}
+.canvas-group canvas {
+  border-radius: 10px;
+  width: 800px;
+  height: 800px;
 }
 
 /*# sourceMappingURL=main.css.map */
