@@ -1,0 +1,19 @@
+{
+  "name": "test-rtsp-stream",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas-grid": "^0.2.1",
+    "express": "^4.18.1",
+    "rtsp-ffmpeg": "^0.0.16",
+    "rtsp-streaming-server": "^2.0.6",
+    "socket.io": "^4.5.0",
+    "ws": "^8.6.0"
+  }
+}

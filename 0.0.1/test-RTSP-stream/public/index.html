@@ -1,0 +1,78 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RTSP Stream</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>SR을 위한 <span>Realtime Web Viewer</span></h1>
+    <button>Start</button>
+    <form>
+      <select name="grid">
+        <option value="default">1 X 1</option>
+        <option value="six">3 X 3</option>
+        <option value="eight">4 X 4</option>
+      </select>
+    </form>
+    <canvas style="background-color: aqua"></canvas>
+    <!-- <canvas style="background-color: aquamarine"></canvas>
+    <canvas style="background-color: bisque"></canvas>
+    <canvas style="background-color: rgb(215, 121, 121)"></canvas> -->
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+      const img = document.createElement("img"),
+        socket = io("");
+      socket.on("data", (data) => {
+        img.src = "data:image/jpeg;base64," + data;
+      });
+
+      const canvas = document.querySelector("canvas");
+      const ctx = canvas.getContext("2d");
+      // const ctx2 = canvases[1].getContext("2d");
+      // const ctx3 = canvases[2].getContext("2d");
+      // const ctx4 = canvases[3].getContext("2d");
+
+      function openFullscreen() {
+        if (canvas.requestFullscreen) {
+          canvas.requestFullscreen();
+        } else if (canvas.mozRequestFullScreen) {
+          /* Firefox */
+
+          canvas.mozRequestFullScreen();
+        } else if (canvas.webkitRequestFullscreen) {
+          /* Chrome, Safari & Opera */
+
+          canvas.webkitRequestFullscreen();
+        } else if (canvas.msRequestFullscreen) {
+          /* IE/Edge */
+
+          canvas.msRequestFullscreen();
+        }
+      }
+
+      canvas.addEventListener("click", () => {
+        click = true;
+        openFullscreen();
+      });
+
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0);
+        // ctx2.drawImage(img, 0, 0);
+        // ctx3.drawImage(img, 0, 0);
+        // ctx4.drawImage(img, 0, 0);
+      };
+
+      const button = document.querySelector("button");
+      button.addEventListener("click", () => {
+        socket.emit("click");
+      });
+    </script>
+  </body>
+</html>
