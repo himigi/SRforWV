@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>HLS Player</title>
+  </head>
+
+  <body>
+    <video id="video" width="500" height="500" controls></video>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <script>
+      const video = document.getElementById("video");
+      //   const videoSrc = "/videos/output.m3u8";
+      const videoSrc =
+        "https://content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6be.m3u8?rays=hjigfedcba&ad.flex=15&ad.access_level=0&expand=drmOff&v=3&ad.adunit=/abc-news/abcnews.com/web/video&ad=abcnews_live&ad.pp=datg-live-vdms&ad.v=2&ad.is_lat=0&ad.npa=0&ad.tfcd=0&ad.vast3=1&ad.vid=$program_id&ad.description_url=https://abcnews.go.com/&ad.ppid=&ad.us_privacy=&ad.cust_params=chan=abc&beacTyp=ssai&stp=vdms&ait=ssai&vdm=live&var=16x9&accesslevel=0&isAuth=0&lang=en&aff=abc&swid=&tag=&objid=abc_live11&refDomain=https://abcnews.go.com/Live&ad.adUnit=/abc-news/abcnews.com/web/video";
+
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+
+        hls.loadSource(videoSrc);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          video.play();
+        });
+      } else if (video.canPlayType("appliacation/vnd.apple.mpegurl")) {
+        video.src = videoSrc;
+        video.addEventListener("loadedmetadata", () => {
+          video.play();
+        });
+      }
+    </script>
+  </body>
+</html>
