@@ -1,0 +1,3 @@
+녹화 : ffmpeg -f gdigrab -framerate 10 -i title="업무망PC-102" -acodec aac -pix_fmt yuv420p -f mpegts -c:v libx264 -r 10 -preset ultrafast -tune zerolatency -crf 23 udp://127.0.0.1:2222/
+
+재생 : ffplay -i udp://127.0.0.1:2222
